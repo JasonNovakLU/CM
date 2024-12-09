@@ -27,10 +27,11 @@ h1{
     font-weight: 500;
 }
 
-.board{
-    width: 600px;
-    margin: 20px auto;
+.board {
+    width: 600px !important;
+    height: 600px !important;
 }
+
 
 .buttons{
     margin-top: 20px;
