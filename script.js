@@ -1,4 +1,16 @@
-// Path to images folder
+// Initial chessboard setup with pieces
+const initialSetup = [
+    ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'],
+    ['pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn'],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null],
+    ['pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn'],
+    ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+];
+
+// Image paths for the pieces
 const pieceImages = {
     black: {
         king: "images/black_king.png",
@@ -18,44 +30,40 @@ const pieceImages = {
     },
 };
 
-// Initial board setup
-const initialSetup = [
-    ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook"], // White back rank
-    ["pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"], // White pawns
-    [], [], [], [], // Empty rows
-    ["pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn", "pawn"], // Black pawns
-    ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook"], // Black back rank
-];
+// Function to create the chessboard
+function createBoard() {
+    const board = document.getElementById('chessboard'); // Get the chessboard container
 
-const colors = ["white", "black"]; // Color of pieces by row
+    // Loop through each row
+    for (let row = 0; row < 8; row++) {
+        const rowElement = document.createElement('div');
+        rowElement.classList.add('row'); // Add row class for styling
 
-// Select the chessboard container
-const chessboard = document.getElementById("chessboard");
+        // Loop through each column
+        for (let col = 0; col < 8; col++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell'); // Add cell class for styling
 
-for (let row = 0; row < 8; row++) {
-    for (let col = 0; col < 8; col++) {
-        const cell = document.createElement("div");
-        cell.classList.add("cell");
-
-        // Alternate colors
-        if ((row + col) % 2 === 0) {
-            cell.classList.add("white");
-        } else {
-            cell.classList.add("black");
-        }
-
-        // Add piece images if present in initialSetup
-        if (initialSetup[row][col]) {
+            // Determine piece placement from initialSetup
             const piece = initialSetup[row][col];
-            const color = row < 2 ? "white" : "black"; // Determine piece color
-            const img = document.createElement("img");
-            img.src = pieceImages[color][piece];
-            img.alt = `${color} ${piece}`;
-            img.style.width = "100%";
-            img.style.height = "100%";
-            cell.appendChild(img);
-        }
+            if (piece) {
+                // Determine the color of the piece (White if row < 2, Black if row >= 6)
+                const color = row < 2 ? 'white' : 'black';
 
-        chessboard.appendChild(cell);
+                // Create an image element for the piece
+                const img = document.createElement('img');
+                img.src = pieceImages[color][piece]; // Set the image source to the piece image
+                img.alt = `${color} ${piece}`; // Set the alt text for accessibility
+                img.style.width = '100%'; // Adjust image to fit the cell width
+                img.style.height = '100%'; // Adjust image to fit the cell height
+                cell.appendChild(img); // Append image to the cell
+            }
+
+            rowElement.appendChild(cell); // Append cell to the row
+        }
+        board.appendChild(rowElement); // Append row to the chessboard container
     }
 }
+
+// Call the createBoard function when the page is loaded
+window.onload = createBoard;
