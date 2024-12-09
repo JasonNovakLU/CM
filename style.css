@@ -1,6 +1,7 @@
+/* Page styling */
 body {
-    background-color: #2d2d2d; /* Dark grey */
-    color: white; /* Optional: Make text white for contrast */
+    background-color: #2d2d2d; /* Dark grey background */
+    color: white; /* White text for contrast */
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
@@ -12,10 +13,10 @@ body {
     display: grid;
     grid-template-columns: repeat(8, 50px); /* 8 columns of 50px */
     grid-template-rows: repeat(8, 50px);    /* 8 rows of 50px */
-    width: 400px;
-    height: 400px;
-    margin: 20px auto;
-    border: 2px solid black; /* Optional: Add a border around the board */
+    width: 400px; /* Board width */
+    height: 400px; /* Board height */
+    margin: 20px auto; /* Center the board horizontally */
+    border: 2px solid black; /* Optional border for the board */
 }
 
 /* Chessboard squares */
@@ -25,9 +26,9 @@ body {
 }
 
 .white {
-    background-color: #f0d9b5; /* Light tan */
+    background-color: #f0d9b5; /* Light tan for white squares */
 }
 
 .black {
-    background-color: #b58863; /* Dark brown */
+    background-color: #b58863; /* Dark brown for black squares */
 }
