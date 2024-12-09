@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         moveSpeed: 'fast',
         snapBackSpeed: 500,
         snapSpeed: 100,
-        document.querySelector('#board').style.width: '600px';
+        document.querySelector('#board').style.width = '600px';
         document.querySelector('#board').style.height: '600px';
 
     };
