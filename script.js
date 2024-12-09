@@ -1,20 +1,20 @@
 // Path to images folder
 const pieceImages = {
     black: {
-        king: "images/black-king.png",
-        queen: "images/black-queen.png",
-        rook: "images/black-rook.png",
-        bishop: "images/black-bishop.png",
-        knight: "images/black-knight.png",
-        pawn: "images/black-pawn.png",
+        king: "images/black_king.png",
+        queen: "images/black_queen.png",
+        rook: "images/black_rook.png",
+        bishop: "images/black_bishop.png",
+        knight: "images/black_knight.png",
+        pawn: "images/black_pawn.png",
     },
     white: {
-        king: "images/white-king.png",
-        queen: "images/white-queen.png",
-        rook: "images/white-rook.png",
-        bishop: "images/white-bishop.png",
-        knight: "images/white-knight.png",
-        pawn: "images/white-pawn.png",
+        king: "images/white_king.png",
+        queen: "images/white_queen.png",
+        rook: "images/white_rook.png",
+        bishop: "images/white_bishop.png",
+        knight: "images/white_knight.png",
+        pawn: "images/white_pawn.png",
     },
 };
 
