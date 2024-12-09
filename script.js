@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         moveSpeed: 'fast',
         snapBackSpeed: 500,
         snapSpeed: 100,
+        boardSize: '600px'
     };
 
     // Initialize the chessboard
