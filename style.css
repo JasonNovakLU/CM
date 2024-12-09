@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #333;  /* Dark grey background for the page */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +11,7 @@ body {
 #chessboard {
     display: grid;
     grid-template-columns: repeat(8, 60px);  /* 8 columns, each 60px wide */
-    grid-template-rows: repeat(8, 60px);  /* 8 rows, each 60px tall */
+    grid-template-rows: repeat(8, 60px);     /* 8 rows, each 60px tall */
     gap: 2px;
 }
 
@@ -21,14 +21,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e0e0e0;
-    border: 1px solid #ccc;
 }
 
 .cell:nth-child(even) {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0;  /* Light color for white squares */
 }
 
 .cell:nth-child(odd) {
-    background-color: #d3d3d3;
+    background-color: #333;     /* Dark color for black squares */
 }
