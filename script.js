@@ -72,7 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Initialize the chessboard
-    board = Chessboard('board', boardConfig);
+   board = Chessboard('board', {
+    draggable: true,
+    dropOffBoard: 'trash',
+    sparePieces: true,
+    boardSize: 600,  // Set this to match your desired board size
+    pieceWidth: 75,   // Set the piece size, adjust as needed
+});
+
 
     // Event listener for the "Play Again" button
     document.querySelector('.play-again').addEventListener('click', () => {
