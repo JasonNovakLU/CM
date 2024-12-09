@@ -44,24 +44,20 @@ function createBoard() {
             const cell = document.createElement('div');
             cell.classList.add('cell'); // Add cell class for styling
 
-            // Determine piece placement from initialSetup
-            const piece = initialSetup[row][col];
+            // Optionally, add piece images here
+            const piece = initialSetup[row][col]; // You can use your initial setup for pieces
             if (piece) {
-                // Determine the color of the piece (White if row < 2, Black if row >= 6)
-                const color = row < 2 ? 'white' : 'black';
-
-                // Create an image element for the piece
                 const img = document.createElement('img');
-                img.src = pieceImages[color][piece]; // Set the image source to the piece image
-                img.alt = `${color} ${piece}`; // Set the alt text for accessibility
-                img.style.width = '100%'; // Adjust image to fit the cell width
-                img.style.height = '100%'; // Adjust image to fit the cell height
-                cell.appendChild(img); // Append image to the cell
+                img.src = pieceImages[color][piece];
+                img.alt = `${color} ${piece}`;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                cell.appendChild(img);
             }
 
-            rowElement.appendChild(cell); // Append cell to the row
+            rowElement.appendChild(cell); // Append cell to row
         }
-        board.appendChild(rowElement); // Append row to the chessboard container
+        board.appendChild(rowElement); // Append row to chessboard container
     }
 }
 
