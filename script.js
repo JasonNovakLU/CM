@@ -685,7 +685,7 @@ function displayMove(startingSquareId,destinationSquareId,promotedTo="blank"){
 }
 
 function getBestMove(fen,callback) {
-   let engine = new Worker("./node_modules/stockfish/src/stockfish-nnue-16.js");
+   let engine = new Worker("assets/js/stockfish-nnue-16.js");
    engine.onmessage = function (event) {
     let message = event.data;
     if(message.startsWith("bestmove")) {
