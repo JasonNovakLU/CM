@@ -1,65 +1,106 @@
-// Initial chessboard setup with pieces
-const initialSetup = [
-    ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'],
-    ['pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn'],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-    ['pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn'],
-    ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
-];
+// Wait for the DOM to be fully loaded before executing code
+document.addEventListener('DOMContentLoaded', () => {
+    let board = null; // Initialize the chessboard
+    const game = new Chess(); // Create new Chess.js game instance
+    const moveHistory = document.getElementById('move-history'); // Get move history container
+    let moveCount = 1; // Initialize the move count
+    let userColor = 'w'; // Initialize the user's color as white
 
-// Image paths for the pieces
-const pieceImages = {
-    black: {
-        king: "images/black_king.png",
-        queen: "images/black_queen.png",
-        rook: "images/black_rook.png",
-        bishop: "images/black_bishop.png",
-        knight: "images/black_knight.png",
-        pawn: "images/black_pawn.png",
-    },
-    white: {
-        king: "images/white_king.png",
-        queen: "images/white_queen.png",
-        rook: "images/white_rook.png",
-        bishop: "images/white_bishop.png",
-        knight: "images/white_knight.png",
-        pawn: "images/white_pawn.png",
-    },
-};
+    // Function to make a random move for the computer
+    const makeRandomMove = () => {
+        const possibleMoves = game.moves();
 
-// Function to create the chessboard
-function createBoard() {
-    const board = document.getElementById('chessboard'); // Get the chessboard container
-
-    // Loop through each row
-    for (let row = 0; row < 8; row++) {
-        const rowElement = document.createElement('div');
-        rowElement.classList.add('row'); // Add row class for styling
-
-        // Loop through each column
-        for (let col = 0; col < 8; col++) {
-            const cell = document.createElement('div');
-            cell.classList.add('cell'); // Add cell class for styling
-
-            // Optionally, add piece images here
-            const piece = initialSetup[row][col]; // You can use your initial setup for pieces
-            if (piece) {
-                const img = document.createElement('img');
-                img.src = pieceImages[color][piece];
-                img.alt = `${color} ${piece}`;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                cell.appendChild(img);
-            }
-
-            rowElement.appendChild(cell); // Append cell to row
+        if (game.game_over()) {
+            alert("Checkmate!");
+        } else {
+            const randomIdx = Math.floor(Math.random() * possibleMoves.length);
+            const move = possibleMoves[randomIdx];
+            game.move(move);
+            board.position(game.fen());
+            recordMove(move, moveCount); // Record and display the move with move count
+            moveCount++; // Increament the move count
         }
-        board.appendChild(rowElement); // Append row to chessboard container
-    }
-}
+    };
 
-// Call the createBoard function when the page is loaded
-window.onload = createBoard;
+    // Function to record and display a move in the move history
+    const recordMove = (move, count) => {
+        const formattedMove = count % 2 === 1 ? `${Math.ceil(count / 2)}. ${move}` : `${move} -`;
+        moveHistory.textContent += formattedMove + ' ';
+        moveHistory.scrollTop = moveHistory.scrollHeight; // Auto-scroll to the latest move
+    };
+
+    // Function to handle the start of a drag position
+    const onDragStart = (source, piece) => {
+        // Allow the user to drag only their own pieces based on color
+        return !game.game_over() && piece.search(userColor) === 0;
+    };
+
+    // Function to handle a piece drop on the board
+    const onDrop = (source, target) => {
+        const move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q',
+        });
+
+        if (move === null) return 'snapback';
+
+        window.setTimeout(makeRandomMove, 250);
+        recordMove(move.san, moveCount); // Record and display the move with move count
+        moveCount++;
+    };
+
+    // Function to handle the end of a piece snap animation
+    const onSnapEnd = () => {
+        board.position(game.fen());
+    };
+
+    // Configuration options for the chessboard
+    const boardConfig = {
+        showNotation: true,
+        draggable: true,
+        position: 'start',
+        onDragStart,
+        onDrop,
+        onSnapEnd,
+        moveSpeed: 'fast',
+        snapBackSpeed: 500,
+        snapSpeed: 100,
+    };
+
+    // Initialize the chessboard
+    board = Chessboard('board', boardConfig);
+
+    // Event listener for the "Play Again" button
+    document.querySelector('.play-again').addEventListener('click', () => {
+        game.reset();
+        board.start();
+        moveHistory.textContent = '';
+        moveCount = 1;
+        userColor = 'w';
+    });
+
+    // Event listener for the "Set Position" button
+    document.querySelector('.set-pos').addEventListener('click', () => {
+        const fen = prompt("Enter the FEN notation for the desired position!");
+        if (fen !== null) {
+            if (game.load(fen)) {
+                board.position(fen);
+                moveHistory.textContent = '';
+                moveCount = 1;
+                userColor = 'w';
+            } else {
+                alert("Invalid FEN notation. Please try again.");
+            }
+        }
+    });
+
+    // Event listener for the "Flip Board" button
+    document.querySelector('.flip-board').addEventListener('click', () => {
+        board.flip();
+        makeRandomMove();
+        // Toggle user's color after flipping the board
+        userColor = userColor === 'w' ? 'b' : 'w';
+    });
+
+});
